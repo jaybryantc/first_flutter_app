@@ -1,5 +1,6 @@
 import 'package:first_flutter_app/pages/login_page.dart';
 import 'package:first_flutter_app/pages/register_page.dart';
+import 'package:first_flutter_app/pages/user_list_page.dart';
 import 'package:flutter/material.dart';
 
 void main() => runApp(MyApp());
@@ -27,6 +28,7 @@ class MyApp extends StatelessWidget {
         '/':(context) => LoginPage(),
         LoginPage.ROUTE_NAME :(context) => LoginPage(),
         RegisterPage.ROUTE_NAME :(context) => RegisterPage(),
+        UserListPage.ROUTE_NAME : (context) => UserListPage(),
       },
     );
   }

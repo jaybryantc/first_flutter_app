@@ -1,5 +1,6 @@
 
 import 'package:first_flutter_app/pages/register_page.dart';
+import 'package:first_flutter_app/pages/user_list_page.dart';
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatefulWidget {
@@ -15,6 +16,10 @@ class _LoginPageState extends State<LoginPage> {
 
   void gotoRegister() {
     Navigator.pushNamed(context, RegisterPage.ROUTE_NAME);
+  }
+
+  void login() {
+    Navigator.pushReplacement(context, new MaterialPageRoute(builder: (context) => UserListPage()));
   }
 
   @override
@@ -55,9 +60,7 @@ class _LoginPageState extends State<LoginPage> {
             ),
 
             FlatButton(
-                onPressed: () {
-                  print("Login button is pressed.");
-                },
+                onPressed: login,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
