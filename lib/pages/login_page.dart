@@ -10,7 +10,8 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  String usernameError=null, passwordError=null;
+  String usernameError=null;
+  String passwordError=null;
 
   void gotoRegister() {
     Navigator.pushNamed(context, RegisterPage.ROUTE_NAME);
@@ -27,6 +28,7 @@ class _LoginPageState extends State<LoginPage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
+
             TextField(
               decoration: InputDecoration(
                 hintText: "Type your username here",
@@ -38,6 +40,7 @@ class _LoginPageState extends State<LoginPage> {
                 print('Username $text');
               },
             ),
+
             TextField(
               decoration: InputDecoration(
                 hintText: "Type your password here",
@@ -48,7 +51,9 @@ class _LoginPageState extends State<LoginPage> {
               onChanged: (text) {
                 print('Password $text');
               },
+              obscureText: true,
             ),
+
             FlatButton(
                 onPressed: () {
                   print("Login button is pressed.");
@@ -60,6 +65,7 @@ class _LoginPageState extends State<LoginPage> {
                   ],
                 )
             ),
+
             FlatButton(
                 onPressed: gotoRegister,
                 child: Row(
@@ -69,6 +75,7 @@ class _LoginPageState extends State<LoginPage> {
                   ],
                 )
             ),
+
           ],
         ),
       ),
