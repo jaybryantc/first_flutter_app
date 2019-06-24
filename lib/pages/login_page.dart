@@ -1,4 +1,6 @@
 
+import 'dart:async';
+
 import 'package:first_flutter_app/pages/register_page.dart';
 import 'package:first_flutter_app/pages/user_list_page.dart';
 import 'package:flutter/material.dart';
@@ -11,16 +13,7 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  String usernameError=null;
-  String passwordError=null;
-
-  void gotoRegister() {
-    Navigator.pushNamed(context, RegisterPage.ROUTE_NAME);
-  }
-
-  void login() {
-    Navigator.pushReplacement(context, new MaterialPageRoute(builder: (context) => UserListPage()));
-  }
+  LoginPageViewModel _loginPageViewModel = new LoginPageViewModel();
 
   @override
   Widget build(BuildContext context) {
@@ -34,33 +27,44 @@ class _LoginPageState extends State<LoginPage> {
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
 
-            TextField(
-              decoration: InputDecoration(
-                hintText: "Type your username here",
-                labelText: "Username",
-                errorText: usernameError,
+            StreamBuilder<String> (
+              stream: _loginPageViewModel.usernameError,
+              builder: (context, snapshot) => TextField(
+                decoration: InputDecoration(
+                  hintText: "Type your username here",
+                  labelText: "Username",
+                  errorText: snapshot.data,
+                ),
+                maxLines: 1,
+                onChanged: (text) {
+                  print('Username $text');
+                  _loginPageViewModel.username.add(text);
+                },
               ),
-              maxLines: 1,
-              onChanged: (text) {
-                print('Username $text');
-              },
             ),
 
-            TextField(
-              decoration: InputDecoration(
-                hintText: "Type your password here",
-                labelText: "Password",
-                errorText: passwordError,
+            StreamBuilder<String>(
+              stream: _loginPageViewModel.passwordError,
+              builder: (context, snapshot) => TextField(
+                decoration: InputDecoration(
+                  hintText: "Type your password here",
+                  labelText: "Password",
+                  errorText: snapshot.data,
+                ),
+                maxLines: 1,
+                onChanged: (text) {
+                  print('Password $text');
+                  _loginPageViewModel.password.add(text);
+                },
+                obscureText: true,
               ),
-              maxLines: 1,
-              onChanged: (text) {
-                print('Password $text');
-              },
-              obscureText: true,
             ),
+
 
             FlatButton(
-                onPressed: login,
+                onPressed: () {
+                  _loginPageViewModel.login(context);
+                },
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
@@ -70,7 +74,9 @@ class _LoginPageState extends State<LoginPage> {
             ),
 
             FlatButton(
-                onPressed: gotoRegister,
+                onPressed: () {
+                  _loginPageViewModel.gotoRegister(context);
+                },
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
@@ -83,5 +89,38 @@ class _LoginPageState extends State<LoginPage> {
         ),
       ),
     );
+  }
+}
+
+class LoginPageViewModel {
+  bool _hasError1 = true, _hasError2;
+  
+  final _usernameController = StreamController<String>.broadcast();
+  Sink<String> get username => _usernameController;
+
+  final _passwordController = StreamController<String>.broadcast();
+  Sink<String> get password => _passwordController;
+
+  Stream<String> get usernameError => _usernameController.stream.map((text) => text.isEmpty ? "Please enter your username" : null);
+
+  Stream<String> get passwordError => _passwordController.stream.map((text) => text.isEmpty ? "Please enter your password" : null);
+
+  LoginPageViewModel() {
+    usernameError.listen((error){
+      _hasError1 = error != null;
+    });
+    passwordError.listen((error){
+      _hasError2 = error != null;
+    });
+  }
+  
+  void login(BuildContext context) {
+    if (!_hasError1 && !_hasError2) {
+      Navigator.pushReplacement(context, new MaterialPageRoute(builder: (context) => UserListPage()));
+    }
+  }
+
+  void gotoRegister(BuildContext context) {
+    Navigator.pushNamed(context, RegisterPage.ROUTE_NAME);
   }
 }
