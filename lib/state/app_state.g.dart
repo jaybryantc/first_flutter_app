@@ -17,21 +17,61 @@ class _$AppStateSerializer implements StructuredSerializer<AppState> {
   @override
   Iterable serialize(Serializers serializers, AppState object,
       {FullType specifiedType = FullType.unspecified}) {
-    return <Object>[];
+    final result = <Object>[];
+    if (object.currentUser != null) {
+      result
+        ..add('currentUser')
+        ..add(serializers.serialize(object.currentUser,
+            specifiedType: const FullType(User)));
+    }
+    if (object.userList != null) {
+      result
+        ..add('userList')
+        ..add(serializers.serialize(object.userList,
+            specifiedType:
+                const FullType(BuiltList, const [const FullType(User)])));
+    }
+    return result;
   }
 
   @override
   AppState deserialize(Serializers serializers, Iterable serialized,
       {FullType specifiedType = FullType.unspecified}) {
-    return new AppStateBuilder().build();
+    final result = new AppStateBuilder();
+
+    final iterator = serialized.iterator;
+    while (iterator.moveNext()) {
+      final key = iterator.current as String;
+      iterator.moveNext();
+      final dynamic value = iterator.current;
+      switch (key) {
+        case 'currentUser':
+          result.currentUser.replace(serializers.deserialize(value,
+              specifiedType: const FullType(User)) as User);
+          break;
+        case 'userList':
+          result.userList.replace(serializers.deserialize(value,
+                  specifiedType:
+                      const FullType(BuiltList, const [const FullType(User)]))
+              as BuiltList);
+          break;
+      }
+    }
+
+    return result.build();
   }
 }
 
 class _$AppState extends AppState {
+  @override
+  final User currentUser;
+  @override
+  final BuiltList<User> userList;
+
   factory _$AppState([void Function(AppStateBuilder) updates]) =>
       (new AppStateBuilder()..update(updates)).build();
 
-  _$AppState._() : super._();
+  _$AppState._({this.currentUser, this.userList}) : super._();
 
   @override
   AppState rebuild(void Function(AppStateBuilder) updates) =>
@@ -43,24 +83,47 @@ class _$AppState extends AppState {
   @override
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    return other is AppState;
+    return other is AppState &&
+        currentUser == other.currentUser &&
+        userList == other.userList;
   }
 
   @override
   int get hashCode {
-    return 134797703;
+    return $jf($jc($jc(0, currentUser.hashCode), userList.hashCode));
   }
 
   @override
   String toString() {
-    return newBuiltValueToStringHelper('AppState').toString();
+    return (newBuiltValueToStringHelper('AppState')
+          ..add('currentUser', currentUser)
+          ..add('userList', userList))
+        .toString();
   }
 }
 
 class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
   _$AppState _$v;
 
+  UserBuilder _currentUser;
+  UserBuilder get currentUser => _$this._currentUser ??= new UserBuilder();
+  set currentUser(UserBuilder currentUser) => _$this._currentUser = currentUser;
+
+  ListBuilder<User> _userList;
+  ListBuilder<User> get userList =>
+      _$this._userList ??= new ListBuilder<User>();
+  set userList(ListBuilder<User> userList) => _$this._userList = userList;
+
   AppStateBuilder();
+
+  AppStateBuilder get _$this {
+    if (_$v != null) {
+      _currentUser = _$v.currentUser?.toBuilder();
+      _userList = _$v.userList?.toBuilder();
+      _$v = null;
+    }
+    return this;
+  }
 
   @override
   void replace(AppState other) {
@@ -77,7 +140,24 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
 
   @override
   _$AppState build() {
-    final _$result = _$v ?? new _$AppState._();
+    _$AppState _$result;
+    try {
+      _$result = _$v ??
+          new _$AppState._(
+              currentUser: _currentUser?.build(), userList: _userList?.build());
+    } catch (_) {
+      String _$failedField;
+      try {
+        _$failedField = 'currentUser';
+        _currentUser?.build();
+        _$failedField = 'userList';
+        _userList?.build();
+      } catch (e) {
+        throw new BuiltValueNestedFieldError(
+            'AppState', _$failedField, e.toString());
+      }
+      rethrow;
+    }
     replace(_$result);
     return _$result;
   }
