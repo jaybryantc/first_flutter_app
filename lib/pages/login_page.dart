@@ -1,22 +1,37 @@
-
-import 'dart:async';
-
-import 'package:first_flutter_app/pages/register_page.dart';
-import 'package:first_flutter_app/pages/user_list_page.dart';
 import 'package:flutter/material.dart';
+import 'login_page_vm.dart';
 
 class LoginPage extends StatefulWidget {
   static final String ROUTE_NAME = "/login";
   @override
-  State<StatefulWidget> createState() => _LoginPageState();
+  State<StatefulWidget> createState() => LoginPageState();
 
 }
 
-class _LoginPageState extends State<LoginPage> {
-  LoginPageViewModel _loginPageViewModel = new LoginPageViewModel();
+class LoginPageState extends State<LoginPage> {
+  LoginPageViewModel _loginPageViewModel;
+
+  @override
+  void initState() {
+    super.initState();
+    _loginPageViewModel = new LoginPageViewModel(state: this);
+  }
+
+  void showErrorDialog(BuildContext context) {
+    showDialog(context: context, barrierDismissible: true, builder: (BuildContext context) => AlertDialog(
+      title: Text("Error"),
+      content: Text("Something went wrong."),
+      actions: <Widget>[
+        FlatButton(onPressed: () {
+          Navigator.of(context).pop();
+        }, child: Text("Ok"),)
+      ],
+    ));
+  }
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       appBar: AppBar(
         title: Text("Login"),
@@ -61,17 +76,19 @@ class _LoginPageState extends State<LoginPage> {
               ),
             ),
 
-
-            FlatButton(
-                onPressed: () {
-                  _loginPageViewModel.login(context);
-                },
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Text("Login")
-                  ],
-                )
+            StreamBuilder<String>(
+              stream: _loginPageViewModel.buttonLabelStream,
+              builder: (context, snapshot) => FlatButton(
+                  onPressed: () {
+                    _loginPageViewModel.login(context);
+                  },
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Text(snapshot.data ?? "Login")
+                    ],
+                  )
+              ),
             ),
 
             FlatButton(
@@ -90,49 +107,5 @@ class _LoginPageState extends State<LoginPage> {
         ),
       ),
     );
-  }
-}
-
-class LoginPageViewModel {
-  bool _hasError1 = true, _hasError2 = true;
-  
-  final _usernameController = StreamController<String>.broadcast();
-  Sink<String> get username => _usernameController;
-
-  final _passwordController = StreamController<String>.broadcast();
-  Sink<String> get password => _passwordController;
-
-  Stream<String> get usernameError => _usernameController.stream.map((text) {
-    usernameValue = text;
-    return text.isEmpty ? "Please enter your username" : null;
-  });
-
-  Stream<String> get passwordError => _passwordController.stream.map((text){
-    passwordValue = text;
-    return text.isEmpty ? "Please enter your password" : null;
-  });
-
-  String usernameValue, passwordValue;
-
-  LoginPageViewModel() {
-    usernameError.listen((error){
-      _hasError1 = error != null;
-    });
-    passwordError.listen((error){
-      _hasError2 = error != null;
-    });
-  }
-  
-  void login(BuildContext context) {
-
-    if (_hasError1) username.add("");
-    if (_hasError2) password.add("");
-    if (!_hasError1 && !_hasError2) {
-      Navigator.pushReplacement(context, new MaterialPageRoute(builder: (context) => UserListPage()));
-    }
-  }
-
-  void gotoRegister(BuildContext context) {
-    Navigator.pushNamed(context, RegisterPage.ROUTE_NAME);
   }
 }
