@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -8,15 +10,8 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPageState extends State<RegisterPage> {
-  String usernameError = null;
-  String passwordError = null;
-  String password2Error = null;
-  String fullNameError = null;
-  String companyError = null;
-  String addressError = null;
 
-  DateTime birthDate = null;
-
+  DateTime _birthDate;
 
   void selectBirthDate() async {
     DateTime selectedDate = await showDatePicker(context: context,
@@ -24,12 +19,10 @@ class _RegisterPageState extends State<RegisterPage> {
         firstDate: DateTime(1900),
         lastDate: DateTime.now());
 
-    setState(() {
-      birthDate = selectedDate ?? birthDate;
-    });
+    _birthDate = selectedDate ?? _birthDate;
   }
 
-  String getBirthDateString() => DateFormat('MMM-dd-yyyy').format(birthDate);
+  String getBirthDateString() => DateFormat('MMM-dd-yyyy').format(_birthDate);
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +40,7 @@ class _RegisterPageState extends State<RegisterPage> {
               decoration: InputDecoration(
                 hintText: "Type your username here",
                 labelText: "Username",
-                errorText: usernameError,
+                errorText: null,
               ),
               maxLines: 1,
               onChanged: (text) {
@@ -59,7 +52,7 @@ class _RegisterPageState extends State<RegisterPage> {
               decoration: InputDecoration(
                 hintText: "Type your password here",
                 labelText: "Password",
-                errorText: passwordError,
+                errorText: null,
               ),
               maxLines: 1,
               onChanged: (text) {
@@ -72,7 +65,7 @@ class _RegisterPageState extends State<RegisterPage> {
               decoration: InputDecoration(
                 hintText: "Retype your password",
                 labelText: "Verify your password",
-                errorText: password2Error,
+                errorText: null,
               ),
               maxLines: 1,
               onChanged: (text) {
@@ -85,7 +78,7 @@ class _RegisterPageState extends State<RegisterPage> {
               decoration: InputDecoration(
                 hintText: "Type your full name here",
                 labelText: "Full Name",
-                errorText: fullNameError,
+                errorText: null,
               ),
               maxLines: 1,
               onChanged: (text) {
@@ -97,7 +90,7 @@ class _RegisterPageState extends State<RegisterPage> {
               decoration: InputDecoration(
                 hintText: "Type your company name here",
                 labelText: "Company",
-                errorText: companyError,
+                errorText: null,
               ),
               maxLines: 1,
               onChanged: (text) {
@@ -109,7 +102,7 @@ class _RegisterPageState extends State<RegisterPage> {
               decoration: InputDecoration(
                 hintText: "Type your address here",
                 labelText: "Address",
-                errorText: addressError,
+                errorText: null,
               ),
               minLines: 1,
               maxLines: 3,
@@ -123,7 +116,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    Text(birthDate != null ? 'Birth Date : ' + getBirthDateString() : "Click to select your Birth Date")
+                    Text(_birthDate != null ? 'Birth Date : ' + getBirthDateString() : "Click to select your Birth Date")
                   ],
                 )
             ),

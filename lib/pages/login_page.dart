@@ -39,6 +39,7 @@ class _LoginPageState extends State<LoginPage> {
                 onChanged: (text) {
                   print('Username $text');
                   _loginPageViewModel.username.add(text);
+
                 },
               ),
             ),
@@ -93,7 +94,7 @@ class _LoginPageState extends State<LoginPage> {
 }
 
 class LoginPageViewModel {
-  bool _hasError1 = true, _hasError2;
+  bool _hasError1 = true, _hasError2 = true;
   
   final _usernameController = StreamController<String>.broadcast();
   Sink<String> get username => _usernameController;
@@ -101,9 +102,17 @@ class LoginPageViewModel {
   final _passwordController = StreamController<String>.broadcast();
   Sink<String> get password => _passwordController;
 
-  Stream<String> get usernameError => _usernameController.stream.map((text) => text.isEmpty ? "Please enter your username" : null);
+  Stream<String> get usernameError => _usernameController.stream.map((text) {
+    usernameValue = text;
+    return text.isEmpty ? "Please enter your username" : null;
+  });
 
-  Stream<String> get passwordError => _passwordController.stream.map((text) => text.isEmpty ? "Please enter your password" : null);
+  Stream<String> get passwordError => _passwordController.stream.map((text){
+    passwordValue = text;
+    return text.isEmpty ? "Please enter your password" : null;
+  });
+
+  String usernameValue, passwordValue;
 
   LoginPageViewModel() {
     usernameError.listen((error){
@@ -115,6 +124,9 @@ class LoginPageViewModel {
   }
   
   void login(BuildContext context) {
+
+    if (_hasError1) username.add("");
+    if (_hasError2) password.add("");
     if (!_hasError1 && !_hasError2) {
       Navigator.pushReplacement(context, new MaterialPageRoute(builder: (context) => UserListPage()));
     }
