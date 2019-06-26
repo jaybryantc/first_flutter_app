@@ -17,20 +17,12 @@ class _$AppStateSerializer implements StructuredSerializer<AppState> {
   @override
   Iterable serialize(Serializers serializers, AppState object,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = <Object>[];
-    if (object.currentUser != null) {
-      result
-        ..add('currentUser')
-        ..add(serializers.serialize(object.currentUser,
-            specifiedType: const FullType(User)));
-    }
-    if (object.userList != null) {
-      result
-        ..add('userList')
-        ..add(serializers.serialize(object.userList,
-            specifiedType:
-                const FullType(BuiltList, const [const FullType(User)])));
-    }
+    final result = <Object>[
+      'authState',
+      serializers.serialize(object.authState,
+          specifiedType: const FullType(AuthState)),
+    ];
+
     return result;
   }
 
@@ -45,15 +37,9 @@ class _$AppStateSerializer implements StructuredSerializer<AppState> {
       iterator.moveNext();
       final dynamic value = iterator.current;
       switch (key) {
-        case 'currentUser':
-          result.currentUser.replace(serializers.deserialize(value,
-              specifiedType: const FullType(User)) as User);
-          break;
-        case 'userList':
-          result.userList.replace(serializers.deserialize(value,
-                  specifiedType:
-                      const FullType(BuiltList, const [const FullType(User)]))
-              as BuiltList);
+        case 'authState':
+          result.authState.replace(serializers.deserialize(value,
+              specifiedType: const FullType(AuthState)) as AuthState);
           break;
       }
     }
@@ -64,14 +50,16 @@ class _$AppStateSerializer implements StructuredSerializer<AppState> {
 
 class _$AppState extends AppState {
   @override
-  final User currentUser;
-  @override
-  final BuiltList<User> userList;
+  final AuthState authState;
 
   factory _$AppState([void Function(AppStateBuilder) updates]) =>
       (new AppStateBuilder()..update(updates)).build();
 
-  _$AppState._({this.currentUser, this.userList}) : super._();
+  _$AppState._({this.authState}) : super._() {
+    if (authState == null) {
+      throw new BuiltValueNullFieldError('AppState', 'authState');
+    }
+  }
 
   @override
   AppState rebuild(void Function(AppStateBuilder) updates) =>
@@ -83,21 +71,18 @@ class _$AppState extends AppState {
   @override
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    return other is AppState &&
-        currentUser == other.currentUser &&
-        userList == other.userList;
+    return other is AppState && authState == other.authState;
   }
 
   @override
   int get hashCode {
-    return $jf($jc($jc(0, currentUser.hashCode), userList.hashCode));
+    return $jf($jc(0, authState.hashCode));
   }
 
   @override
   String toString() {
     return (newBuiltValueToStringHelper('AppState')
-          ..add('currentUser', currentUser)
-          ..add('userList', userList))
+          ..add('authState', authState))
         .toString();
   }
 }
@@ -105,21 +90,16 @@ class _$AppState extends AppState {
 class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
   _$AppState _$v;
 
-  UserBuilder _currentUser;
-  UserBuilder get currentUser => _$this._currentUser ??= new UserBuilder();
-  set currentUser(UserBuilder currentUser) => _$this._currentUser = currentUser;
-
-  ListBuilder<User> _userList;
-  ListBuilder<User> get userList =>
-      _$this._userList ??= new ListBuilder<User>();
-  set userList(ListBuilder<User> userList) => _$this._userList = userList;
+  AuthStateBuilder _authState;
+  AuthStateBuilder get authState =>
+      _$this._authState ??= new AuthStateBuilder();
+  set authState(AuthStateBuilder authState) => _$this._authState = authState;
 
   AppStateBuilder();
 
   AppStateBuilder get _$this {
     if (_$v != null) {
-      _currentUser = _$v.currentUser?.toBuilder();
-      _userList = _$v.userList?.toBuilder();
+      _authState = _$v.authState?.toBuilder();
       _$v = null;
     }
     return this;
@@ -142,16 +122,12 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
   _$AppState build() {
     _$AppState _$result;
     try {
-      _$result = _$v ??
-          new _$AppState._(
-              currentUser: _currentUser?.build(), userList: _userList?.build());
+      _$result = _$v ?? new _$AppState._(authState: authState.build());
     } catch (_) {
       String _$failedField;
       try {
-        _$failedField = 'currentUser';
-        _currentUser?.build();
-        _$failedField = 'userList';
-        _userList?.build();
+        _$failedField = 'authState';
+        authState.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             'AppState', _$failedField, e.toString());

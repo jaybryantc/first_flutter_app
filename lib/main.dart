@@ -5,7 +5,7 @@ import 'package:first_flutter_app/state/app_state.dart';
 import 'package:flutter/material.dart';
 import 'package:redux/redux.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:first_flutter_app/reducers/app_reducer.dart';
+import 'package:first_flutter_app/redux/reducers/app_reducer.dart';
 
 void main() => runApp(MyApp());
 
