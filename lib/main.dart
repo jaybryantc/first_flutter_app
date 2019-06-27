@@ -1,24 +1,19 @@
 import 'package:first_flutter_app/pages/login_page.dart';
 import 'package:first_flutter_app/pages/register_page.dart';
 import 'package:first_flutter_app/pages/user_list_page.dart';
+import 'package:first_flutter_app/redux/store.dart';
 import 'package:first_flutter_app/state/app_state.dart';
 import 'package:flutter/material.dart';
 import 'package:redux/redux.dart';
 import 'package:flutter_redux/flutter_redux.dart';
-import 'package:first_flutter_app/redux/reducers/app_reducer.dart';
 
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
+  static final navKey = new GlobalKey<NavigatorState>();
 
   Store<AppState> getStore() {
-    final store = new Store<AppState>(
-      appReducer,
-      initialState: new AppState(),
-      middleware: []
-    );
-
-    return store;
+    return createStore();
   }
 
   // This widget is the root of your application.
@@ -41,6 +36,7 @@ class MyApp extends StatelessWidget {
           primarySwatch: Colors.blue,
         ),
         initialRoute: '/',
+        navigatorKey: navKey,
         routes: {
           '/':(context) => LoginPage(),
           LoginPage.ROUTE_NAME :(context) => LoginPage(),

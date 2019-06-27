@@ -4,6 +4,7 @@ import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
 import 'package:built_value/standard_json_plugin.dart';
 import 'package:first_flutter_app/state/serializers.dart';
+import 'package:first_flutter_app/state/iso_8601_date_time_serializer.dart';
 
 part 'user.g.dart';
 
@@ -22,13 +23,15 @@ abstract class User implements Built<User, UserBuilder> {
   String get company;
 
   User._();
-  factory User([void Function(UserBuilder) updates]) = _$User;
+//  factory User([void Function(UserBuilder) updates]) = _$User;
+  factory User() = _$User;
 
   static User fromJson(String json) {
     final standardSerializers = (serializers.toBuilder()
+      ..add(Iso8601DateTimeSerializer())
       ..addPlugin(StandardJsonPlugin())
     ).build();
-    return standardSerializers.deserialize(jsonDecode(json));
+    return standardSerializers.deserialize(jsonDecode(json), specifiedType: FullType(User));
   }
 
   String toJson() {

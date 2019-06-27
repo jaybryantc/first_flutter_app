@@ -34,12 +34,7 @@ abstract class AuthState implements Built<AuthState, AuthStateBuilder> {
 
   AuthState._();
 //  factory AuthState([void Function(AuthStateBuilder) updates]) = _$AuthState;
-  factory AuthState() => _$AuthState._(currentUser: null,
-      username: "",
-      password: "",
-      usernameError: null,
-      passwordError: null,
-      loginButtonLabel: "Login");
+  factory AuthState() => _$AuthState._(loginButtonLabel: "Login");
 
   static AuthState fromJson(String json) {
     final standardSerializers = (serializers.toBuilder()

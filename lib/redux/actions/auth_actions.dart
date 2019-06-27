@@ -16,6 +16,16 @@ class ValidatePassword {
   ValidatePassword(this.password);
 }
 
+class UsernameError {
+  final String usernameError;
+  UsernameError(this.usernameError);
+}
+
+class PasswordError {
+  final String passwordError;
+  PasswordError(this.passwordError);
+}
+
 class LoginSuccessful {
   final User user;
   LoginSuccessful(this.user);
@@ -24,4 +34,21 @@ class LoginSuccessful {
 class LoginUnsuccessful {
   final String error;
   LoginUnsuccessful(this.error);
+}
+
+class LoggingIn {
+  final String buttonLabel;
+  LoggingIn(this.buttonLabel);
+}
+
+class GoToUserList {
+  GoToUserList();
+}
+
+class GoToRegister {
+  GoToRegister();
+}
+
+class ClearErrors {
+  ClearErrors();
 }
