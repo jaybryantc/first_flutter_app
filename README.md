@@ -1,6 +1,8 @@
-# first_flutter_app
+# First Flutter app
 
-Example Flutter application.
+I created this app as a playground for exploring the capabilities of using Flutter as a tool in developing modern mobile applications. This app only includes basic features like login, sign up and showing list of users. In this repository, you will not only see my first experience with Flutter but also how I discover the power of Redux technology for this app's state management and the usage of Built Value for creating immutable data model objects. Feel free to browse my code. I know they're messy so no laughing :D 
+
+I will include link of references soon. For now, enjoy reading below the typical README text for fresh Flutter repository :) 
 
 ## Getting Started
 
