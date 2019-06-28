@@ -23,8 +23,7 @@ abstract class User implements Built<User, UserBuilder> {
   String get company;
 
   User._();
-//  factory User([void Function(UserBuilder) updates]) = _$User;
-  factory User() = _$User;
+  factory User([void Function(UserBuilder) updates]) = _$User;
 
   static User fromJson(String json) {
     final standardSerializers = (serializers.toBuilder()

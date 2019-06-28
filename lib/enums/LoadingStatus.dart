@@ -1,0 +1,4 @@
+enum LoadingStatus {
+  Initial,
+  Loading,
+}

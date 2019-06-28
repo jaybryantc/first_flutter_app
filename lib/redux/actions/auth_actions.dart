@@ -1,11 +1,5 @@
 import 'package:first_flutter_app/state/user.dart';
 
-class Login {
-  final String username;
-  final String password;
-  Login(this.username, this.password);
-}
-
 class ValidateUsername {
   final String username;
   ValidateUsername(this.username);
@@ -31,14 +25,9 @@ class LoginSuccessful {
   LoginSuccessful(this.user);
 }
 
-class LoginUnsuccessful {
-  final String error;
-  LoginUnsuccessful(this.error);
-}
-
-class LoggingIn {
+class ChangeLoginButtonLabel {
   final String buttonLabel;
-  LoggingIn(this.buttonLabel);
+  ChangeLoginButtonLabel(this.buttonLabel);
 }
 
 class GoToUserList {

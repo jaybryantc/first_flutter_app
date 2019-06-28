@@ -1,3 +1,4 @@
+import 'package:first_flutter_app/redux/actions/api_actions.dart';
 import 'package:first_flutter_app/redux/actions/auth_actions.dart';
 import 'package:first_flutter_app/state/auth_state.dart';
 import 'package:redux/redux.dart';
@@ -9,8 +10,8 @@ final auth_reducer = combineReducers<AuthState>([
   TypedReducer<AuthState, UsernameError>(_usernameError),
   TypedReducer<AuthState, PasswordError>(_passwordError),
   TypedReducer<AuthState, LoginSuccessful>(_loginSuccessful),
-  TypedReducer<AuthState, LoginUnsuccessful>(_loginUnsuccessful),
-  TypedReducer<AuthState, LoggingIn>(_loggingIn),
+  TypedReducer<AuthState, ApiError>(_loginUnsuccessful),
+  TypedReducer<AuthState, ChangeLoginButtonLabel>(_loggingIn),
   TypedReducer<AuthState, GoToUserList>(_goToUserList),
   TypedReducer<AuthState, GoToRegister>(_goToRegister),
   TypedReducer<AuthState, ClearErrors>(_clearErrors),

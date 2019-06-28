@@ -47,6 +47,7 @@ class LoginPageState extends State<LoginPage> {
             children: <Widget>[
 
               TextField(
+                enabled: viewModel.buttonLabel.toLowerCase() == "login",
                 decoration: InputDecoration(
                   hintText: "Type your username here",
                   labelText: "Username",
@@ -60,6 +61,7 @@ class LoginPageState extends State<LoginPage> {
               ),
 
               TextField(
+                enabled: viewModel.buttonLabel.toLowerCase() == "login",
                 decoration: InputDecoration(
                   hintText: "Type your password here",
                   labelText: "Password",

@@ -10,25 +10,31 @@ class Requests {
     _makeRequest(endpoint, requestParams: requestParams)
         ..then((response){
           print(response);
-          onSuccess(response);
+          if (response.statusCode == 200) {
+            var responseBody = response.transform(utf8.decoder).join();
+            responseBody.then((responseBody) {
+              onSuccess(responseBody);
+            });
+          } else {
+            onError("api error.");
+          }
+
         }, onError: onError)
         ..catchError(onError);
 
   }
 
-  static Future<String> _makeRequest(String endpoint, {Map<String, String> requestParams}) async {
+  static Future<HttpClientResponse> _makeRequest(String endpoint, {Map<String, String> requestParams}) async {
 
     HttpClient client = new HttpClient();
     var uri = Uri.https(_base_url, endpoint);
     var request = await client.getUrl(uri);
     request.headers.add("x-api-key", _api_key);
     var response = await request.close();
-    var responseBody = response.transform(utf8.decoder).join();
-
-    return responseBody;
+    return response;
   }
 
 }
 
-typedef onSuccess(data);
+typedef onSuccess(String data);
 typedef onError(error);

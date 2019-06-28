@@ -9,9 +9,7 @@ class AuthMiddleware extends MiddlewareClass<AppState> {
 
   @override
   void call(Store<AppState> store, action, NextDispatcher next) {
-    if (action is Login) {
-      login(action.username, action.password, next);
-    }
+
 
     if (action is ValidateUsername) {
       validateUsername(action.username, next);
@@ -35,25 +33,7 @@ class AuthMiddleware extends MiddlewareClass<AppState> {
     next(action);
   }
 
-  void login(String username, String password, NextDispatcher next) {
-    if (username == null || username.isEmpty) {
-      next(UsernameError("Invalid Username."));
-    }
 
-    if (password == null || password.isEmpty) {
-      next(PasswordError("Invalid Password."));
-    } else {
-      next(ClearErrors());
-      next(LoggingIn("Logging in..."));
-      Requests.call(Endpoints.LOGIN, onSuccess: (response) {
-        next(LoginSuccessful(User.fromJson(response)));
-        next(GoToUserList());
-      }, onError: (error) {
-        next(LoginUnsuccessful(error.toString()));
-      });
-    }
-
-  }
 
   void validateUsername(String username, NextDispatcher next) {
     if (username.isEmpty) {
