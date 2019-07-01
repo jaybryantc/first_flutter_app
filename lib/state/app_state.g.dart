@@ -24,6 +24,9 @@ class _$AppStateSerializer implements StructuredSerializer<AppState> {
       'usersState',
       serializers.serialize(object.usersState,
           specifiedType: const FullType(UsersState)),
+      'registerState',
+      serializers.serialize(object.registerState,
+          specifiedType: const FullType(RegisterState)),
     ];
 
     return result;
@@ -48,6 +51,10 @@ class _$AppStateSerializer implements StructuredSerializer<AppState> {
           result.usersState.replace(serializers.deserialize(value,
               specifiedType: const FullType(UsersState)) as UsersState);
           break;
+        case 'registerState':
+          result.registerState.replace(serializers.deserialize(value,
+              specifiedType: const FullType(RegisterState)) as RegisterState);
+          break;
       }
     }
 
@@ -60,16 +67,22 @@ class _$AppState extends AppState {
   final AuthState authState;
   @override
   final UsersState usersState;
+  @override
+  final RegisterState registerState;
 
   factory _$AppState([void Function(AppStateBuilder) updates]) =>
       (new AppStateBuilder()..update(updates)).build();
 
-  _$AppState._({this.authState, this.usersState}) : super._() {
+  _$AppState._({this.authState, this.usersState, this.registerState})
+      : super._() {
     if (authState == null) {
       throw new BuiltValueNullFieldError('AppState', 'authState');
     }
     if (usersState == null) {
       throw new BuiltValueNullFieldError('AppState', 'usersState');
+    }
+    if (registerState == null) {
+      throw new BuiltValueNullFieldError('AppState', 'registerState');
     }
   }
 
@@ -85,19 +98,22 @@ class _$AppState extends AppState {
     if (identical(other, this)) return true;
     return other is AppState &&
         authState == other.authState &&
-        usersState == other.usersState;
+        usersState == other.usersState &&
+        registerState == other.registerState;
   }
 
   @override
   int get hashCode {
-    return $jf($jc($jc(0, authState.hashCode), usersState.hashCode));
+    return $jf($jc($jc($jc(0, authState.hashCode), usersState.hashCode),
+        registerState.hashCode));
   }
 
   @override
   String toString() {
     return (newBuiltValueToStringHelper('AppState')
           ..add('authState', authState)
-          ..add('usersState', usersState))
+          ..add('usersState', usersState)
+          ..add('registerState', registerState))
         .toString();
   }
 }
@@ -116,12 +132,19 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
   set usersState(UsersStateBuilder usersState) =>
       _$this._usersState = usersState;
 
+  RegisterStateBuilder _registerState;
+  RegisterStateBuilder get registerState =>
+      _$this._registerState ??= new RegisterStateBuilder();
+  set registerState(RegisterStateBuilder registerState) =>
+      _$this._registerState = registerState;
+
   AppStateBuilder();
 
   AppStateBuilder get _$this {
     if (_$v != null) {
       _authState = _$v.authState?.toBuilder();
       _usersState = _$v.usersState?.toBuilder();
+      _registerState = _$v.registerState?.toBuilder();
       _$v = null;
     }
     return this;
@@ -146,7 +169,9 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
     try {
       _$result = _$v ??
           new _$AppState._(
-              authState: authState.build(), usersState: usersState.build());
+              authState: authState.build(),
+              usersState: usersState.build(),
+              registerState: registerState.build());
     } catch (_) {
       String _$failedField;
       try {
@@ -154,6 +179,8 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
         authState.build();
         _$failedField = 'usersState';
         usersState.build();
+        _$failedField = 'registerState';
+        registerState.build();
       } catch (e) {
         throw new BuiltValueNestedFieldError(
             'AppState', _$failedField, e.toString());

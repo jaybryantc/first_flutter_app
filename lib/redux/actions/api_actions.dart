@@ -1,4 +1,4 @@
-import 'package:first_flutter_app/enums/LoadingStatus.dart';
+import 'package:first_flutter_app/enums/loading_status.dart';
 
 class Login {
   final String username;
@@ -13,9 +13,10 @@ class Register {
   final String retypePassword;
   final String fullname;
   final String company;
+  final String address;
   final DateTime birthDate;
 
-  Register(this.username, this.password, this.retypePassword, this.fullname, this.company, this.birthDate);
+  Register(this.username, this.password, this.retypePassword, this.fullname, this.company, this.address, this.birthDate);
 }
 
 class GetUserList {

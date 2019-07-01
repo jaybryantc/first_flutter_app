@@ -1,5 +1,5 @@
 import 'package:built_value/built_value.dart';
-import 'package:first_flutter_app/enums/LoadingStatus.dart';
+import 'package:first_flutter_app/enums/loading_status.dart';
 import 'package:first_flutter_app/state/user.dart';
 
 part 'users_state.g.dart';

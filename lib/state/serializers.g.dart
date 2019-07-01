@@ -9,6 +9,7 @@ part of serializers;
 Serializers _$serializers = (new Serializers().toBuilder()
       ..add(AppState.serializer)
       ..add(AuthState.serializer)
+      ..add(RegisterState.serializer)
       ..add(User.serializer))
     .build();
 

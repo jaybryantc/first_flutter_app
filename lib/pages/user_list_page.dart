@@ -1,4 +1,4 @@
-import 'package:first_flutter_app/enums/LoadingStatus.dart';
+import 'package:first_flutter_app/enums/loading_status.dart';
 import 'package:first_flutter_app/pages/user_list_view_model.dart';
 import 'package:first_flutter_app/redux/actions/api_actions.dart';
 import 'package:first_flutter_app/state/app_state.dart';

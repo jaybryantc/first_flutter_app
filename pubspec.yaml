@@ -29,6 +29,7 @@ dependencies:
   redux: any
   flutter_redux: any
   redux_logging: any
+  fluttertoast: any
 
 dev_dependencies:
   flutter_test:

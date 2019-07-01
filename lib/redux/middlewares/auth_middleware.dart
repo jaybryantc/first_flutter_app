@@ -1,8 +1,8 @@
-import 'package:first_flutter_app/http/endpoints.dart';
-import 'package:first_flutter_app/http/requests.dart';
+
+import 'package:first_flutter_app/enums/register_field.dart';
 import 'package:first_flutter_app/redux/actions/auth_actions.dart';
+import 'package:first_flutter_app/redux/actions/register_actions.dart';
 import 'package:first_flutter_app/state/app_state.dart';
-import 'package:first_flutter_app/state/user.dart';
 import 'package:redux/redux.dart';
 
 class AuthMiddleware extends MiddlewareClass<AppState> {
@@ -18,22 +18,17 @@ class AuthMiddleware extends MiddlewareClass<AppState> {
     if (action is ValidatePassword) {
       validatePassword(action.password, next);
     }
-//    switch(action) {
-//      case Login:
-//        login(action.username, action.password, next);
-//        break;
-//      case ValidateUsername:
-//        validateUsername(action.username, next);
-//        break;
-//      case ValidatePassword:
-//        validatePassword(action.password, next);
-//        break;
-//    }
+
+    if (action is CheckIfEmptyOrNull) {
+      checkIfEmptyOrNull(action.content, action.field, next);
+    }
+
+    if (action is MatchPassword) {
+      matchPassword(action.password, action.retypePassword, next);
+    }
 
     next(action);
   }
-
-
 
   void validateUsername(String username, NextDispatcher next) {
     if (username.isEmpty) {
@@ -50,6 +45,23 @@ class AuthMiddleware extends MiddlewareClass<AppState> {
       next(PasswordError(null));
     }
 
+  }
+
+  void checkIfEmptyOrNull(String text, RegisterFieldType field, NextDispatcher next) {
+    if (text == null || text.isEmpty) {
+      next(UpdateErrors(field.field, 'Invalid ${field.value}.'));
+    } else {
+      next(UpdateErrors(field.field, null));
+    }
+  }
+
+  void matchPassword(String password, String retypePassword, NextDispatcher next) {
+    if (retypePassword != null && password != retypePassword) {
+      next(UpdateErrors(
+          RegisterField.RETYPE_PASSWORD, "Passwords not match."));
+    } else {
+      next(UpdateErrors(RegisterField.RETYPE_PASSWORD, null));
+    }
   }
 
 }

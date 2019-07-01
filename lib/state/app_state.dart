@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:built_collection/built_collection.dart';
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
+import 'package:first_flutter_app/state/register_state.dart';
 import 'package:first_flutter_app/state/serializers.dart';
 import 'package:built_value/standard_json_plugin.dart';
 import 'package:first_flutter_app/state/user.dart';
@@ -18,9 +19,10 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
 
   AuthState get authState;
   UsersState get usersState;
+  RegisterState get registerState;
 
   AppState._();
-  factory AppState() => _$AppState._(authState: new AuthState(), usersState: new UsersState());
+  factory AppState() => _$AppState._(authState: new AuthState(), usersState: new UsersState(), registerState: new RegisterState());
 
   static AppState fromJson(String json) {
     final standardSerializers = (serializers.toBuilder()
