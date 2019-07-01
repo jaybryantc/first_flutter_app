@@ -1,4 +1,5 @@
 import 'package:first_flutter_app/pages/login_view_model.dart';
+import 'package:first_flutter_app/redux/actions/auth_actions.dart';
 import 'package:first_flutter_app/state/app_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
@@ -39,9 +40,7 @@ class LoginPageState extends State<LoginPage> {
       body: Container(
         padding: EdgeInsets.all(20),
         child: StoreConnector<AppState, LoginViewModel>(
-          onInit: (store) => {
-
-          },
+          onInit: (store) {},
           builder: (context, viewModel) => Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
@@ -75,7 +74,7 @@ class LoginPageState extends State<LoginPage> {
                 obscureText: true,
               ),
 
-              FlatButton(
+              RaisedButton(
                   onPressed: viewModel.buttonLabel.toLowerCase() == "login" ? viewModel.login : null,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,

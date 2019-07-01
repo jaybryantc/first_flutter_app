@@ -1,7 +1,9 @@
+import 'package:first_flutter_app/pages/login_page.dart';
 import 'package:first_flutter_app/pages/register_page.dart';
 import 'package:first_flutter_app/pages/user_list_page.dart';
 import 'package:first_flutter_app/redux/actions/register_actions.dart';
 import 'package:first_flutter_app/state/app_state.dart';
+import 'package:first_flutter_app/state/auth_state.dart';
 import 'package:flutter/material.dart';
 import 'package:redux/redux.dart';
 import 'package:first_flutter_app/redux/actions/auth_actions.dart';
@@ -14,7 +16,7 @@ class NavigationMiddleware extends MiddlewareClass<AppState> {
   void call(Store<AppState> store, action, NextDispatcher next) {
 
     if (action is GoToUserList) {
-      MyApp.navKey.currentState.pushReplacement(new MaterialPageRoute(builder: (context) => UserListPage()));
+      MyApp.navKey.currentState.pushReplacementNamed(UserListPage.ROUTE_NAME);
     }
 
 
@@ -26,7 +28,10 @@ class NavigationMiddleware extends MiddlewareClass<AppState> {
       MyApp.navKey.currentState.pop();
     }
 
+    if (action is LogOut) {
+      MyApp.navKey.currentState.pushReplacementNamed(LoginPage.ROUTE_NAME);
+    }
+
     next(action);
   }
-
 }

@@ -154,7 +154,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
                   Text(viewModel.birthdateError ?? "", style: TextStyle(color: Colors.red, ),),
 
-                  FlatButton(
+                  RaisedButton(
                       onPressed: viewModel.loadingStatus == LoadingStatus.Initial ? viewModel.register : null,
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,

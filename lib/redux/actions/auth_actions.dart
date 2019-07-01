@@ -38,6 +38,6 @@ class GoToRegister {
   GoToRegister();
 }
 
-class ClearErrors {
-  ClearErrors();
+class LogOut {
+  LogOut();
 }

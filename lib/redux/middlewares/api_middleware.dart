@@ -46,7 +46,6 @@ class ApiMiddleware extends MiddlewareClass<AppState> {
     }
 
     if (!hasError) {
-      next(ClearErrors());
       next(ChangeLoginButtonLabel("Logging in..."));
       Requests.call(Endpoints.LOGIN, onSuccess: (response) {
         next(LoginSuccessful(User.fromJson(response)));

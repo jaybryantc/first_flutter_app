@@ -14,7 +14,6 @@ final auth_reducer = combineReducers<AuthState>([
   TypedReducer<AuthState, ChangeLoginButtonLabel>(_loggingIn),
   TypedReducer<AuthState, GoToUserList>(_goToUserList),
   TypedReducer<AuthState, GoToRegister>(_goToRegister),
-  TypedReducer<AuthState, ClearErrors>(_clearErrors),
 ]);
 
 AuthState _login(AuthState state, action) => state.rebuild((state) {
@@ -39,7 +38,12 @@ AuthState _passwordError(AuthState state, action) => state.rebuild((state) {
 });
 
 AuthState _loginSuccessful(AuthState state, action) => state.rebuild((state) {
-  state ..currentUser.replace(action.user);
+  state ..currentUser.replace(action.user)
+      ..username = null
+      ..password = null
+      ..usernameError = null
+      ..passwordError = null
+      ..loginButtonLabel = "Login";
 });
 
 AuthState _loginUnsuccessful(AuthState state, action) => state.rebuild((state) {
@@ -54,8 +58,3 @@ AuthState _loggingIn(AuthState state, action) => state.rebuild((state) {
 AuthState _goToUserList(AuthState state, action) => state;
 
 AuthState _goToRegister(AuthState state, action) => state;
-
-AuthState _clearErrors(AuthState state, action) => state.rebuild((state) {
-  state ..usernameError = null
-      ..passwordError = null;
-});
