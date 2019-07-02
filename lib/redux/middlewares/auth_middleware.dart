@@ -10,27 +10,26 @@ class AuthMiddleware extends MiddlewareClass<AppState> {
   @override
   void call(Store<AppState> store, action, NextDispatcher next) {
 
-
     if (action is ValidateUsername) {
-      validateUsername(action.username, next);
+      _validateUsername(action.username, next);
     }
 
     if (action is ValidatePassword) {
-      validatePassword(action.password, next);
+      _validatePassword(action.password, next);
     }
 
     if (action is CheckIfEmptyOrNull) {
-      checkIfEmptyOrNull(action.content, action.field, next);
+      _checkIfEmptyOrNull(action.content, action.field, next);
     }
 
     if (action is MatchPassword) {
-      matchPassword(action.password, action.retypePassword, next);
+      _matchPassword(action.password, action.retypePassword, next);
     }
 
     next(action);
   }
 
-  void validateUsername(String username, NextDispatcher next) {
+  void _validateUsername(String username, NextDispatcher next) {
     if (username.isEmpty) {
       next(UsernameError("Invalid Username."));
     } else {
@@ -38,16 +37,15 @@ class AuthMiddleware extends MiddlewareClass<AppState> {
     }
   }
 
-  void validatePassword(String password, NextDispatcher next) {
+  void _validatePassword(String password, NextDispatcher next) {
     if (password.isEmpty) {
       next(PasswordError("Invalid Password."));
     } else {
       next(PasswordError(null));
     }
-
   }
 
-  void checkIfEmptyOrNull(String text, RegisterFieldType field, NextDispatcher next) {
+  void _checkIfEmptyOrNull(String text, RegisterFieldType field, NextDispatcher next) {
     if (text == null || text.isEmpty) {
       next(UpdateErrors(field.field, 'Invalid ${field.value}.'));
     } else {
@@ -55,7 +53,7 @@ class AuthMiddleware extends MiddlewareClass<AppState> {
     }
   }
 
-  void matchPassword(String password, String retypePassword, NextDispatcher next) {
+  void _matchPassword(String password, String retypePassword, NextDispatcher next) {
     if (retypePassword != null && password != retypePassword) {
       next(UpdateErrors(
           RegisterField.RETYPE_PASSWORD, "Passwords not match."));

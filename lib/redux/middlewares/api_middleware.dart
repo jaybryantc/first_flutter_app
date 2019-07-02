@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:first_flutter_app/enums/loading_status.dart';
 import 'package:first_flutter_app/enums/register_field.dart';
 import 'package:first_flutter_app/http/endpoints.dart';
@@ -18,22 +17,22 @@ class ApiMiddleware extends MiddlewareClass<AppState> {
   void call(Store<AppState> store, action, NextDispatcher next) {
 
     if (action is Login) {
-      login(action.username, action.password, next);
+      _login(action.username, action.password, next);
     }
 
     if (action is Register) {
-      register(action.username, action.password, action.retypePassword,
+      _register(action.username, action.password, action.retypePassword,
           action.fullname, action.company, action.address, action.birthDate,next);
     }
 
     if (action is GetUserList) {
-      getUserList(next);
+      _getUserList(next);
     }
 
     next(action);
   }
 
-  void login(String username, String password, NextDispatcher next) {
+  void _login(String username, String password, NextDispatcher next) {
     bool hasError = false;
     if (username == null || username.isEmpty) {
       hasError = true;
@@ -59,7 +58,7 @@ class ApiMiddleware extends MiddlewareClass<AppState> {
 
   }
 
-  void register(String username, String password, String retypePassword,
+  void _register(String username, String password, String retypePassword,
       String fullname, String company, String address, DateTime birthDate,
       NextDispatcher next) {
     bool hasError = false;
@@ -115,10 +114,9 @@ class ApiMiddleware extends MiddlewareClass<AppState> {
         Fluttertoast.showToast(msg: error.toString());
       });
     }
-
   }
 
-  void getUserList(NextDispatcher next) {
+  void _getUserList(NextDispatcher next) {
     next(SetLoadingStatus(LoadingStatus.Loading));
     Requests.call(Endpoints.USERS, onSuccess: (response) {
       print(response);
