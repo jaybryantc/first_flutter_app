@@ -4,6 +4,8 @@ import 'package:first_flutter_app/state/app_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 
+
+// TODO: only use stateful widgets if you necessarily need setState method or initializing heavy calculations
 class LoginPage extends StatefulWidget {
   static final String ROUTE_NAME = "/login";
   @override
@@ -11,8 +13,11 @@ class LoginPage extends StatefulWidget {
 
 }
 
+
+// TODO: in the future, state class should be private. e.g _LoginPageState
 class LoginPageState extends State<LoginPage> {
 
+// TODO: not used... so use stateful widget
   @override
   void initState() {
     super.initState();
@@ -22,7 +27,7 @@ class LoginPageState extends State<LoginPage> {
     showDialog(context: context, barrierDismissible: true, builder: (BuildContext context) => AlertDialog(
       title: Text("Error"),
       content: Text("Something went wrong."),
-      actions: <Widget>[
+      actions: <Widget>[ // TODO: no need to explicitly cast it to <Widget>
         FlatButton(onPressed: () {
           Navigator.of(context).pop();
         }, child: Text("Ok"),)
@@ -32,21 +37,21 @@ class LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-
+// TODO: avoid extra spaces
     return Scaffold(
       appBar: AppBar(
         title: Text("Login"),
       ),
       body: Container(
-        padding: EdgeInsets.all(20),
+        padding: EdgeInsets.all(20), // for values like this that don't change dynamically, use const
         child: StoreConnector<AppState, LoginViewModel>(
-          onInit: (store) {},
+          onInit: (store) {}, // TODO: remove init if not used
           builder: (context, viewModel) => Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
-
+// TODO: avoid extra spaces
               TextField(
-                enabled: viewModel.buttonLabel.toLowerCase() == "login",
+                enabled: viewModel.buttonLabel.toLowerCase() == "login", // TODO: logic should be inside vm
                 decoration: InputDecoration(
                   hintText: "Type your username here",
                   labelText: "Username",
@@ -58,9 +63,9 @@ class LoginPageState extends State<LoginPage> {
                   viewModel.validateUsername(text);
                 },
               ),
-
+// TODO: extra space 
               TextField(
-                enabled: viewModel.buttonLabel.toLowerCase() == "login",
+                enabled: viewModel.buttonLabel.toLowerCase() == "login", // TODO: should be inside vm
                 decoration: InputDecoration(
                   hintText: "Type your password here",
                   labelText: "Password",
@@ -73,24 +78,24 @@ class LoginPageState extends State<LoginPage> {
                 },
                 obscureText: true,
               ),
-
+// TODO: extra space
               RaisedButton(
-                  onPressed: viewModel.buttonLabel.toLowerCase() == "login" ? viewModel.login : null,
+                  onPressed: viewModel.buttonLabel.toLowerCase() == "login" ? viewModel.login : null, // TODO: login inside vm
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
+                    children: <Widget>[ // No need to explicitly declare <widget>
                       Text(viewModel.buttonLabel)
                     ],
                   )
               ),
-
+// TODO: extra space
               FlatButton(
-                  onPressed: () {
+                  onPressed: () { // TODO: you could use ()=>
                     viewModel.goToRegister();
                   },
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
+                    children: <Widget>[ // TODO: remove <Widget>
                       Text("Register")
                     ],
                   )
@@ -98,7 +103,7 @@ class LoginPageState extends State<LoginPage> {
 
             ],
           ),
-          
+// TODO: extra space
           converter: (store) => LoginViewModel.fromStore(store),
 
         ),

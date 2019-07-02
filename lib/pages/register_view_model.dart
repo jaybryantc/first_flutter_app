@@ -4,6 +4,9 @@ import 'package:first_flutter_app/redux/actions/register_actions.dart';
 import 'package:first_flutter_app/state/app_state.dart';
 import 'package:redux/redux.dart';
 
+
+// TODO: view model should be inside the register_page
+// TODO: data here should be in a class instead
 class RegisterViewModel {
   String username;
   String password;

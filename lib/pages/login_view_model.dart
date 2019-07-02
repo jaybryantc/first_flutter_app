@@ -3,6 +3,7 @@ import 'package:first_flutter_app/redux/actions/auth_actions.dart';
 import 'package:first_flutter_app/state/app_state.dart';
 import 'package:redux/redux.dart';
 
+// TODO: viewModel should be inside login_page, no need to be in another file
 class LoginViewModel {
 
   final String username;

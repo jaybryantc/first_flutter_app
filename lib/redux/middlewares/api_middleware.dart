@@ -13,6 +13,7 @@ import 'package:first_flutter_app/state/user.dart';
 import 'package:redux/redux.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
+// TODO: make methods private
 class ApiMiddleware extends MiddlewareClass<AppState> {
   @override
   void call(Store<AppState> store, action, NextDispatcher next) {

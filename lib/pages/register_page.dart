@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:intl/intl.dart';
 
+// TODO: no need for stateful widget
 class RegisterPage extends StatefulWidget {
   static final String ROUTE_NAME = "/register";
   @override
@@ -41,15 +42,15 @@ class _RegisterPageState extends State<RegisterPage> {
           onInit: (store) {
             store.dispatch(ResetRegister());
           },
-          
+          // TODO: avoid extra spaces in general
           builder: (context, viewModel){
-            return Container(
-              padding: EdgeInsets.all(20),
-              child: Column(
+            return Container( 
+              padding: EdgeInsets.all(20), // TODO: use const
+              child: Column(// TODO: page is overflowing since it's not scrollable, use a listview instead
                 children: <Widget>[
 
                   TextField(
-                    enabled: viewModel.loadingStatus == LoadingStatus.Initial,
+                    enabled: viewModel.loadingStatus == LoadingStatus.Initial, // TODO: logic inside vm
                     decoration: InputDecoration(
                       hintText: "Type your username here",
                       labelText: "Username",
@@ -63,7 +64,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   ),
 
                   TextField(
-                    enabled: viewModel.loadingStatus == LoadingStatus.Initial,
+                    enabled: viewModel.loadingStatus == LoadingStatus.Initial, // TODO: same here
                     decoration: InputDecoration(
                       hintText: "Type your password here",
                       labelText: "Password",
@@ -79,7 +80,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   ),
 
                   TextField(
-                    enabled: viewModel.loadingStatus == LoadingStatus.Initial,
+                    enabled: viewModel.loadingStatus == LoadingStatus.Initial, // TODO: same here
                     decoration: InputDecoration(
                       hintText: "Retype your password",
                       labelText: "Verify your password",
@@ -100,7 +101,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   ),
 
                   TextField(
-                    enabled: viewModel.loadingStatus == LoadingStatus.Initial,
+                    enabled: viewModel.loadingStatus == LoadingStatus.Initial, // TODO: same here
                     decoration: InputDecoration(
                       hintText: "Type your full name here",
                       labelText: "Full Name",
@@ -114,7 +115,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   ),
 
                   TextField(
-                    enabled: viewModel.loadingStatus == LoadingStatus.Initial,
+                    enabled: viewModel.loadingStatus == LoadingStatus.Initial, // TODO: same here
                     decoration: InputDecoration(
                       hintText: "Type your company name here",
                       labelText: "Company",
@@ -128,7 +129,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   ),
 
                   TextField(
-                    enabled: viewModel.loadingStatus == LoadingStatus.Initial,
+                    enabled: viewModel.loadingStatus == LoadingStatus.Initial, // TODO: same here
                     decoration: InputDecoration(
                       hintText: "Type your address here",
                       labelText: "Address",
@@ -143,10 +144,10 @@ class _RegisterPageState extends State<RegisterPage> {
                   ),
 
                   FlatButton(
-                      onPressed: viewModel.loadingStatus == LoadingStatus.Initial ? () => selectBirthDate(viewModel) : null,
+                      onPressed: viewModel.loadingStatus == LoadingStatus.Initial ? () => selectBirthDate(viewModel) : null,  // TODO: same here
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
+                        children: <Widget>[ // remove <Widget>
                           Text(viewModel.birthDate != null ? 'Birth Date : ' + getBirthDateString(viewModel.birthDate) : "Click to select your Birth Date")
                         ],
                       )

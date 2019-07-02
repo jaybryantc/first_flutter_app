@@ -30,7 +30,7 @@ class _UserListPageState extends State<UserListPage> {
         builder: (context, viewModel) {
 
           if (viewModel.users == null) {
-            String text = viewModel.loadingStatus == LoadingStatus.Loading ? "Loading..." : "Users not loaded";
+            String text = viewModel.loadingStatus == LoadingStatus.Loading ? "Loading..." : "Users not loaded"; // logic should be in vm
             return Container(
               padding: EdgeInsets.all(15),
               child: Center(
@@ -52,7 +52,7 @@ class _UserListPageState extends State<UserListPage> {
         converter: (store) => UserListViewModel.from(store),
       ),
       persistentFooterButtons: <Widget>[
-        StoreConnector<AppState, UserListViewModel>(
+        StoreConnector<AppState, UserListViewModel>( // instead of having duplicated StoreConnector, you can wrap the scaffold widget with the StoreConnector
           builder: (context, viewModel) {
             return RaisedButton(
               onPressed: viewModel.logOut,
@@ -67,10 +67,11 @@ class _UserListPageState extends State<UserListPage> {
   }
 }
 
+// TODO: make it private, if used by other pages, put it inside another folder
 class UserItemTile extends StatelessWidget {
 
   UserItemTile(this._user);
-  final User _user;
+  final User _user;//TODO: make class private instead of the field
 
   @override
   Widget build(BuildContext context) => _user != null ? UserItem(_user) : UserNotFoundItem();
@@ -87,17 +88,17 @@ class UserNotFoundItem extends StatelessWidget {
 class UserItem extends StatelessWidget {
 
   UserItem(this._user);
-  final User _user;
+  final User _user; //TODO: make class private instead of the field
 
   @override
   Widget build(BuildContext context) => Container(
-    padding: EdgeInsets.all(15),
+    padding: EdgeInsets.all(15), // TODO: const
     child: Row(
       mainAxisAlignment: MainAxisAlignment.start,
       children: <Widget>[
         Image.network("http://www.clker.com/cliparts/3/f/d/e/13734162551503155025leaf.jpg", width: 50, height: 50,),
         Container(
-          padding: EdgeInsets.only(left: 15),
+          padding: EdgeInsets.only(left: 15),// TODO: const
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
