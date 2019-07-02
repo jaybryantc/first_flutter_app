@@ -4,6 +4,7 @@ import 'package:first_flutter_app/state/app_state.dart';
 import 'package:redux/redux.dart';
 
 class LoginViewModel {
+
   final String username;
   final String password;
   final String usernameError;
@@ -14,7 +15,6 @@ class LoginViewModel {
   final Function login;
   final Function goToUserList;
   final Function goToRegister;
-  final bool loginEnabled;
 
   LoginViewModel({
     this.username,
@@ -26,9 +26,9 @@ class LoginViewModel {
     this.validatePassword,
     this.login,
     this.goToUserList,
-    this.goToRegister,
-    this.loginEnabled,
+    this.goToRegister
   });
+
 
   static LoginViewModel fromStore(Store<AppState> store) {
     return LoginViewModel(
@@ -37,13 +37,11 @@ class LoginViewModel {
       usernameError: store.state.authState.usernameError,
       passwordError: store.state.authState.passwordError,
       buttonLabel: store.state.authState.loginButtonLabel,
-      validateUsername: (username) => store.dispatch(ValidateUsername(username)),
-      validatePassword: (password) => store.dispatch(ValidatePassword(password)),
-      login: store.state.authState.loginButtonLabel.toLowerCase() == "login" ?
-          () => store.dispatch(Login(store.state.authState.username, store.state.authState.password)) : null,
-      goToUserList: () => store.dispatch(GoToUserList()),
-      goToRegister: () => store.dispatch(GoToRegister()),
-      loginEnabled: store.state.authState.loginButtonLabel.toLowerCase() == "login",
+      validateUsername: (username) => store.dispatch(new ValidateUsername(username)),
+      validatePassword: (password) => store.dispatch(new ValidatePassword(password)),
+      login: () => store.dispatch(new Login(store.state.authState.username, store.state.authState.password)),
+      goToUserList: () => store.dispatch(new GoToUserList()),
+      goToRegister: () => store.dispatch(new GoToRegister())
     );
   }
 
